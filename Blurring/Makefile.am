@@ -1,20 +1,20 @@
-noinst_LTLIBRARIES = libcamera.la
+noinst_LTLIBRARIES = libblurring.la
 
-libcamera_la_SOURCES = \
-    Source/Camera.cc 
+libblurring_la_SOURCES = \
+    Source/Blurring.cc
 
 noinst_HEADERS = \
-    Header/Camera.h 
+    Header/Blurring.h
 
-# include flags for preprocessor
-libcamera_la_CPPFLAGS = \
+libblurring_la_CPPFLAGS = \
     -I$(srcdir)/Header \
     -I$(top_srcdir)/Libraries/Database/Header \
     -I$(top_srcdir)/Libraries/Exception/Header \
-    -I$(top_srcdir)/Libraries/ThreadSafeQueue/Header
+    -I$(top_srcdir)/Libraries/ThreadSafeQueue/Header \
+    -I$(top_srcdir)/Camera/Header
 
-libcamera_la_LIBADD = \
+libblurring_la_LIBADD = \
     $(top_builddir)/Libraries/Logging/liblogging.la \
     $(top_builddir)/Libraries/Database/libdatabase.la \
     $(top_builddir)/Libraries/Exception/libexception.la \
-    -lv4l2
+    $(top_builddir)/Camera/libcamera.la
