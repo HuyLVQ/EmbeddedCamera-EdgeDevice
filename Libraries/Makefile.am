@@ -1,0 +1,3 @@
+SUBDIRS = ThreadSafeQueue \
+    Exception \
+    Database

@@ -1,0 +1,4 @@
+SUBDIRS = \
+    Libraries \
+    Camera \
+    Blurring
