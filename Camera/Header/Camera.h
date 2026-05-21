@@ -27,9 +27,9 @@
 
 class Camera {
     private:
-        static constexpr const char* CAMERA_DB_PATH = "dsad";
-        static std::unordered_map<std::string, std::shared_ptr<Camera>> s_cameraCompilation;
-        static std::mutex s_initMutex;
+        static inline constexpr const char* CAMERA_DB_PATH = "dsad";
+        static inline std::unordered_map<std::string, std::shared_ptr<Camera>> s_cameraCompilation;
+        static inline std::mutex s_initMutex;
 
         std::shared_ptr<Database> m_cameraDatabase;
         int m_cameraFileDescriptor;

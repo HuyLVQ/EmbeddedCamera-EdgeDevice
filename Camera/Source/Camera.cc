@@ -1,8 +1,5 @@
 #include "Camera.h"
 
-std::unordered_map<std::string, std::shared_ptr<Camera>> Camera::s_cameraCompilation;
-std::mutex Camera::s_initMutex;
-
 Camera::Camera(const std::string& p_cameraFD, struct m_Tag p_tag) {
     (void)p_tag;
     m_cameraFileDescriptor = open(p_cameraFD.c_str(), O_RDWR | O_NONBLOCK);

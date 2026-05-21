@@ -17,16 +17,16 @@
 
 class Blurring {
     private:
-        static constexpr const char* BLURRING_DB_PATH = "dsad";
-        static std::shared_ptr<Database> m_blurringDatabase;
+        static inline constexpr const char* BLURRING_DB_PATH = "dsad";
+        static inline std::shared_ptr<Database> m_blurringDatabase;
 
-        static float m_scaleFactor;
-        static float m_minNeighbors;
+        static inline float m_scaleFactor;
+        static inline float m_minNeighbors;
 
-        static int m_gaussianBlurKernelSize;
-        static int m_sigmaX;
+        static inline int m_gaussianBlurKernelSize;
+        static inline int m_sigmaX;
 
-        static cv::CascadeClassifier m_faceDetector;
+        static inline cv::CascadeClassifier m_faceDetector;
 
         std::thread m_processingThread;
         ThreadSafeQueue<cv::Mat> m_blurredImageQueue;
