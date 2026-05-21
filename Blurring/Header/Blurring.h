@@ -36,6 +36,7 @@ class Blurring {
     
     public:
         explicit Blurring(const std::shared_ptr<Camera>& p_cameraInstance);
+        ~Blurring();
 
         cv::Mat retrieveProcessedImage();
 

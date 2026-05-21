@@ -1,4 +1,5 @@
 SUBDIRS = \
     Libraries \
     Camera \
-    Blurring
+    Blurring \
+    ServerTransmitter

@@ -3,19 +3,22 @@
 ServerTransmitter::ServerTransmitter(const std::shared_ptr<Blurring>& p_blurringInst) {
     try {
         if (m_clientSocket == -1) {
-            s_databaseInst = Database::getInstance(DB_FILE_PATH);
-            s_serverIpAddress = std::get<std::string>(s_databaseInst->getValueFromKey("server-transmitter/server-ip"));
-            s_databaseInst->~Database();
+            auto databaseInst = Database::getInstance(DB_FILE_PATH);
+            s_serverIpAddress = std::get<std::string>(databaseInst->getValueFromKey("server-transmitter/server-ip"));
 
             memset(&s_serverAddress, 0, sizeof(s_serverAddress));
             s_serverAddress.sin_family = AF_INET;
             s_serverAddress.sin_port = htons(s_serverIpAddress);
             s_serverAddress.sin_addr.s_addr = INADDR_ANY;
+
+            m_blurringInst = p_blurringInst;
         }   
 
         m_clientSocket = socket(AF_INET, SOCK_DGRAM, 0);
         m_dtlsInst = std::make_unique<DTLSService>(m_clientSocket, s_serverAddress);
-        m_dtlsInst->handshake();
+        m_dtlsInst->handShake();
+
+        startTransmitFrame();
     } catch (std::exception& exceptionThrown) {
         ;
     }
@@ -52,14 +55,20 @@ bool ServerTransmitter::startTransmitFrame() {
             ).count();
             frameHeader.m_payloadSize = static_cast<int>(imgBuffer.size());
 
-            int bytesSent = sendto(m_clientSocket, reinterpret_cast<const char*>(&frameHeader), sizeof(FrameFormat), 0, (struct sockaddr*)&s_serverAddress, sizeof(s_serverAddress));
-            if (bytesSent <= 0) {
+            const char* reinterpretData = reinterpret_cast<const char*>(&frameHeader);
+            try {
+                int bytesSent = m_dtlsInst->sendPackage(reinterpretData, sizeof(FrameFormat));
+            } catch (const std::exception& error) {
+                std::cout << error.what();
                 m_isWorking.store(false);
                 break;
             }
 
-            bytesSent = sendto(m_clientSocket, reinterpret_cast<const char*>(imgBuffer.data()), imgBuffer.size(), 0, (struct sockaddr*)&s_serverAddress, sizeof(s_serverAddress));
-            if (bytesSent <= 0) {
+            reinterpretData = reinterpret_cast<const char*>(imgBuffer.data());
+            try {
+                int bytesSent = m_dtlsInst->sendPackage(reinterpretData, imgBuffer.size());
+            } catch (const std::exception& error) {
+                std::cout << error.what();
                 m_isWorking.store(false);
                 break;
             }
@@ -85,5 +94,6 @@ bool ServerTransmitter::stopTransmitFrame() {
 
 
 ServerTransmitter::~ServerTransmitter() {
+    stopTransmitFrame();
     close(m_clientSocket);
 }

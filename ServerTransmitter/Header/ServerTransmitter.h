@@ -29,16 +29,15 @@ class ServerTransmitter : public TransmitterIf {
 
         std::unique_ptr<DTLSService> m_dtlsInst;                                                                                            
         std::shared_ptr<Blurring> m_blurringInst;
-        static std::shared_ptr<Database> s_databaseInst;
 
         std::thread m_transmittingThread;
         std::atomic<bool> m_isWorking{false};
 
-
+        bool startTransmitFrame() override;
+        bool stopTransmitFrame() override;
     public:
         explicit ServerTransmitter(const std::shared_ptr<Blurring>& p_blurringInst);
         ~ServerTransmitter();
 
-        bool startTransmitFrame() override;
-        bool stopTransmitFrame() override;
+        
 };

@@ -20,4 +20,5 @@ class DTLSService : public SecurityServiceIf {
         ~DTLSService();
 
         void handShake();
+        int sendPackage(const char* p_encodedPackages, const int& p_encodedLen);
 };

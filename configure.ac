@@ -19,8 +19,13 @@ AC_CONFIG_FILES([
     Libraries/Exception/Makefile
     Libraries/ThreadSafeQueue/Makefile
     Libraries/Database/Makefile
-    Libraries/Camera/Makefile
-    Libraries/Blurring/Makefile
+    Libraries/Frame/Makefile
+    Libraries/SecurityService/Makefile
+    Camera/Makefile
+    Blurring/Makefile 
+    Camera/Makefile
+    Blurring/Makefile
+    ServerTransmitter/Makefile                                                        
 ])
 
 AC_OUTPUT

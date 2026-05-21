@@ -14,7 +14,7 @@ libcamera_la_CPPFLAGS = \
     -I$(top_srcdir)/Libraries/ThreadSafeQueue/Header
 
 libcamera_la_LIBADD = \
-    $(top_builddir)/Libraries/Logging/liblogging.la \
     $(top_builddir)/Libraries/Database/libdatabase.la \
     $(top_builddir)/Libraries/Exception/libexception.la \
+    $(top_builddir)/Libraries/ThreadSafeQueue/libthreadsafequeue.la \
     -lv4l2

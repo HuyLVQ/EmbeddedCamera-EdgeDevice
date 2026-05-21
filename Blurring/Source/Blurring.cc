@@ -46,3 +46,9 @@ void Blurring::startBlurringProcess() {
         }
     });
 } 
+
+Blurring::~Blurring() {
+    if(m_processingThread.joinable()) {
+        m_processingThread.join();
+    }
+}

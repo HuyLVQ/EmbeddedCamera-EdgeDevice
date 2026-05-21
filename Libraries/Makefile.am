@@ -1,3 +1,5 @@
 SUBDIRS = ThreadSafeQueue \
     Exception \
-    Database
+    Database \
+    Frame \
+    SecurityService
